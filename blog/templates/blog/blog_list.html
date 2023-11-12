@@ -1,4 +1,5 @@
 {% for blog in blogs %}
     {{ blog }}
-
+    <a href="{{ blog.get_absolute_url }}"> click here</a>
 {% endfor %}
+--------------------------------------------------------------

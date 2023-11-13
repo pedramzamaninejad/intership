@@ -1,0 +1,16 @@
+{% extends '_base.html' %}
+
+{% block page_name %}
+	Delete blog
+{% endblock %}
+
+{% block Content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Delete Page</h2>
+        <p>This is not a warning if you push the button this blog<b> {{ blog.title }}</b> <br>
+        Will Be Deleted!</p>
+        <button type="submit" class="btn btn-danger">Yes, I'm sure!</button>
+    </form>
+{% endblock %}
+

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Blog
 from .forms import CommentForm, BlogForm
@@ -38,3 +39,13 @@ def blog_detail_view(request, pk):
         'comment_form': comment_form
     }
     return render(request, 'blog/blog_detail.html', context=context)
+
+
+class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = Blog
+    template_name = 'blog/blog_delete.html'
+    success_url = reverse_lazy('blog:blog_list')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user

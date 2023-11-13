@@ -30,7 +30,9 @@
             </ul>
             <span class="navbar-test">
                 {% if user.is_authenticated %}
-                    Hello {{ user.username }}
+                    Hello {{ user.username }}s
+                    <span> |</span>
+                    <a href="{% url 'account_logout' %}">Logout </a>
                 {% else %}
                     <a href="{% url 'account_login' %}">Login</a><span> |</span>
                     <a href="{% url 'account_signup' %}">Signup</a>

@@ -10,7 +10,14 @@
     <h1>{{ blog.author }}</h1>
     <p>{{ blog.title }}</p>
     <p>{{ blog.post|linebreaks }}</p>
-    -----------------------
+
+    {% if blog.author == user %}
+        <a href="{% url 'blog:blog_delete' blog.id %}" class="text-decoration-none">Delete</a>
+        <span> |</span>
+        <a href="#" class="text-decoration-none">Edit</a>
+
+    {% endif %}
+    <br>-----------------------
     <h3>Comment part</h3>
     {% for comment in comments %}
     {#    <h6>Comment number: {{ forloop.counter }}</h6>#}

@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     # third party app
     'allauth',
     'allauth.account',
+    'crispy_forms',
+    'crispy_bootstrap4',
 
     # local app
     "blog"
@@ -155,3 +157,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+# crispy form setting
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"

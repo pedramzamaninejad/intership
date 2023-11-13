@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 
 
 class Blog(models.Model):
-    # title - author - post - dc created - dc modified
     title = models.CharField(max_length=255)
     author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
     post = models.TextField()

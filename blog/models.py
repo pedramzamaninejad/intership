@@ -18,3 +18,17 @@ class Blog(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:blog_detail', args=[self.id])
+
+
+class Comment(models.Model):
+    STATUS_CHOICE = (
+        ('a', 'Approve'),
+        ('na', 'Not Approve'),
+        ('w', 'Wait'),
+    )
+
+    author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, related_name='comment')
+    text = models.CharField(max_length=500)
+    datetime_created = models.DateTimeField(auto_now_add=True)
+
+    status = models.CharField(max_length=2, choices=STATUS_CHOICE, default=STATUS_CHOICE[2][0])

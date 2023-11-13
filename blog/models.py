@@ -26,9 +26,19 @@ class Comment(models.Model):
         ('na', 'Not Approve'),
         ('w', 'Wait'),
     )
+    RATE_CHOICE = (
+        ('1', 'Very Bad'),
+        ('2', 'Bad'),
+        ('3', 'Normal'),
+        ('4', 'Good'),
+        ('5', 'Very Good')
+    )
 
-    author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, related_name='comment')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='comment')
+    blog = models.ForeignKey(Blog, on_delete=models.PROTECT, related_name='comment')
+
     text = models.CharField(max_length=500)
     datetime_created = models.DateTimeField(auto_now_add=True)
 
+    rate = models.CharField(max_length=1, choices=RATE_CHOICE)
     status = models.CharField(max_length=2, choices=STATUS_CHOICE, default=STATUS_CHOICE[2][0])

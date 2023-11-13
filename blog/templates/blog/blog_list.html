@@ -1,5 +1,19 @@
-{% for blog in blogs %}
-    {{ blog }}
-    <a href="{{ blog.get_absolute_url }}"> click here</a>
-    <br>----------------------------------------------------------
-{% endfor %}
+{% extends '_base.html' %}
+
+{% block page_name %}
+    Blog Lists
+{% endblock %}
+
+{% block Content %}
+    {% for blog in blogs %}
+    <div class="card mt-5" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ blog.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">from: {{ blog.author }}</h6>
+            <p class="card-text">{{ blog.post|truncatewords:15 }}</p>
+            <a href="{{ blog.get_absolute_url }}" class="card-link">Check out!</a>
+        </div>
+    </div>
+
+    {% endfor %}
+{% endblock %}

@@ -5,8 +5,7 @@ from .models import Blog, Comment
 
 class BlogCommentInline(admin.TabularInline):
     model = Comment
-    fields = ['author', 'text', 'rate', 'status']
-    extra = 1
+    fields = ['author', 'text', 'rate']
 
 
 @admin.register(Blog)

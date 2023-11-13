@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 class Blog(models.Model):
     title = models.CharField(max_length=255)
-    author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
+    author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, related_name='blogs')
     post = models.TextField()
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_modified = models.DateTimeField(auto_now=True)

@@ -12,12 +12,11 @@ class BlogListView(generic.ListView):
     context_object_name = 'blogs'
 
 
-@login_required
 def blog_detail_view(request, pk):
     # blog object
     blog = get_object_or_404(Blog, pk=pk)
     # blog comments
-    blog_comment = blog.comment.filter('rate')
+    blog_comment = blog.comment.order_by('-rate')
 
     # post a comment
     if request.method == 'POST':
@@ -27,7 +26,7 @@ def blog_detail_view(request, pk):
             # comment user and blog
             new_comment = comment_form.save(commit=False)
             new_comment.blog = blog
-            new_comment.user = request.user
+            new_comment.author = request.user
             new_comment.save()
             comment_form = CommentForm()
     else:

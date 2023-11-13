@@ -1,4 +1,26 @@
+{% load crispy_forms_tags %}
 
 <h1>{{ blog.author }}</h1>
 <p>{{ blog.title }}</p>
 <p>{{ blog.post|linebreaks }}</p>
+-----------------------
+<h3>Comment part</h3>
+{% for comment in comments %}
+{#    <h6>Comment number: {{ forloop.counter }}</h6>#}
+    <h4>author : {{ comment.author }}</h4>
+    <p>{{ comment.text|linebreaksbr }}</p>
+    <h5>rate : {{ comment.rate }}</h5>
+    ---------------------------
+{% endfor %}
+
+{% if user.is_authenticated %}
+    <h1>New Comment</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form|crispy }}
+        <button type="submit" formtarget="_blank" >send</button>
+    </form>
+{% else %}
+    <h5>if you have any comment about this blog, firstly please <a href="{% url 'account_login' %}"> Login</a> or
+        <a href="{% url 'account_signup'%}"> Signup</a></h5>
+{% endif %}

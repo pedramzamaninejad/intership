@@ -20,11 +20,6 @@ class Blog(models.Model):
 
 
 class Comment(models.Model):
-    STATUS_CHOICE = (
-        ('a', 'Approve'),
-        ('na', 'Not Approve'),
-        ('w', 'Wait'),
-    )
     RATE_CHOICE = (
         ('1', 'Very Bad'),
         ('2', 'Bad'),
@@ -40,4 +35,3 @@ class Comment(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True)
 
     rate = models.CharField(max_length=1, choices=RATE_CHOICE)
-    status = models.CharField(max_length=2, choices=STATUS_CHOICE, default=STATUS_CHOICE[2][0])

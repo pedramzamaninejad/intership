@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -17,8 +17,7 @@ def blog_detail_view(request, pk):
     # blog object
     blog = get_object_or_404(Blog, pk=pk)
     # blog comments
-    blog_comment = blog.comment.order_by('-rate')
-
+    blog_comment = blog.comment.order_by('-rate', '-datetime_created')
     # post a comment
     if request.method == 'POST':
         # create comment form object
@@ -29,7 +28,7 @@ def blog_detail_view(request, pk):
             new_comment.blog = blog
             new_comment.author = request.user
             new_comment.save()
-            comment_form = CommentForm()
+            return redirect('blog:blog_detail', pk=pk)
     else:
         comment_form = CommentForm()
 
@@ -49,3 +48,9 @@ class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
     def test_func(self):
         obj = self.get_object()
         return obj.author == self.request.user
+
+
+class BlogCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = BlogForm
+    template_name = 'blog/blog_create.html'
+    success_url = reverse_lazy('blog:blog_list')

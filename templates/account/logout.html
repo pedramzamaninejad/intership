@@ -1,0 +1,18 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block page_name %}
+	Logout
+{% endblock %}
+
+{% block Content %}
+	<h1>Logout Page</h1>
+    <p>Your are login as <b>{{ user.username }}</b></p>
+    <p>are you sure you want to logout ?</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+{% endblock %}

@@ -45,6 +45,18 @@ class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
     template_name = 'blog/blog_delete.html'
     success_url = reverse_lazy('blog:blog_list')
 
+    # testing if user is the author of blog
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+
+
+class BlogUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = Blog
+    template_name = 'blog/blog_update.html'
+    fields = ['title', 'post', 'active']
+
+    # testing if user is the author of blog
     def test_func(self):
         obj = self.get_object()
         return obj.author == self.request.user

@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block page_name %}
+	Blog Update
+{% endblock %}
+
+{% block Content %}
+	<h1>hello {{ user_display }}</h1>
+    <p>Enjoy Editing your blog </p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-warning">Update</button>
+    </form>
+
+{% endblock %}
+

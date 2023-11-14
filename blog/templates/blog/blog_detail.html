@@ -14,7 +14,7 @@
     {% if blog.author == user %}
         <a href="{% url 'blog:blog_delete' blog.id %}" class="text-decoration-none">Delete</a>
         <span> |</span>
-        <a href="#" class="text-decoration-none">Edit</a>
+        <a href="{% url 'blog:blog_update' blog.id %}" class="text-decoration-none">Edit</a>
 
     {% endif %}
     <br>-----------------------

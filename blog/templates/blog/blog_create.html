@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block Content %}
+    <h1>Create Page</h1>
+    <p>You can write anything as you wish</p>
     <form action="" method="post">
         {% csrf_token %}
         {{ form|crispy }}

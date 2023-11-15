@@ -62,7 +62,24 @@ class BlogUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
         return obj.author == self.request.user
 
 
-class BlogCreateView(LoginRequiredMixin, generic.CreateView):
-    form_class = BlogForm
-    template_name = 'blog/blog_create.html'
-    success_url = reverse_lazy('blog:blog_list')
+def blog_create_view(request):
+    if request.method == 'POST':
+        # blog create form
+        blog_form = BlogForm(request.POST)
+
+        if blog_form.is_valid():
+            blog = blog_form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+
+            return redirect('blog:blog_list')
+    else:
+        blog_form = BlogForm()
+
+    return render(request, 'blog/blog_create.html', {'form': blog_form})
+
+
+def user_blogs(request):
+    user_blog = Blog.objects.filter(author_id=request.user.id)
+
+    return render(request, 'blog/user_blog.html', {'blogs': user_blog})

@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.urls import reverse_lazy
+# from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Blog
 from .forms import CommentForm, BlogForm
+from .task import send_mail_task
 
 
 class BlogListView(generic.ListView):
@@ -71,6 +73,9 @@ def blog_create_view(request):
             blog = blog_form.save(commit=False)
             blog.author = request.user
             blog.save()
+
+            send_mail_task.delay('Blog Create', f'Your blog was created with the title of {blog.title}',
+                      'pzamaninejad.net@gmail.com', [f'{blog.author.email}'])
 
             return redirect('blog:blog_list')
     else:
